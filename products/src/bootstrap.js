@@ -1,10 +1,23 @@
 import faker from 'faker'
 
-let products = ''
+const mount = (el) => {
+  let products = ''
 
-for (let i = 0; i < 5; i++) {
-  const name = faker.commerce.productName()
-  products += `<li>${name}</li>`
+  for (let i = 0; i < 5; i++) {
+    const name = faker.commerce.productName()
+    products += `<li>${name}</li>`
+  }
+
+  el.innerHTML = `<ul>${products}</ul>`
 }
 
-document.querySelector('#dev-products').innerHTML = `<ul>${products}</ul>`
+if (process.env.NODE_ENV === 'development') {
+  const el = document.querySelector('#dev-products')
+
+  // Container doesn't have an element with #dev-products
+  if (el) {
+    mount(el)
+  }
+}
+
+export { mount }
